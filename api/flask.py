@@ -1,7 +1,9 @@
-from flask import Flask, Response
-app = Flask(__name__)
+from sanic import Sanic
+from sanic.response import json
+app = Sanic()
 
-@app.route('/', defaults={'path': ''})
+
+@app.route('/')
 @app.route('/<path:path>')
-def catch_all(path):
-    return Response("<h1>Flask</h1><p>You visited: /%s</p>" % (path), mimetype="text/html")
+async def index(request, path=""):
+    return json({'hello': path})
